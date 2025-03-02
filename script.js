@@ -35,3 +35,21 @@ function getNewImage(valueQuery) {
     console.error(`There is an error: ${error.message}`);
   }
 }
+
+// Show a new image without refreshing
+refreshButton.addEventListener("click", () => {
+  getNewImage(defaultQuery);
+});
+
+// Insert a new search value and call the function to show a new Image
+searchButton.addEventListener("click", () => {
+  if (searchInput.value === "") {
+    alert("Empty values not allowed");
+  } else {
+    defaultQuery = searchInput.value;
+    getNewImage(defaultQuery);
+  }
+});
+
+//Initial function call
+getNewImage(defaultQuery);
