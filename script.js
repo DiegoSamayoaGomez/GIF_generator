@@ -10,9 +10,14 @@ const refreshButton = document.querySelector(".refresh");
 let defaultQuery = "landscape";
 
 // Receive a new search value and insert it into the URL
-function getNewImage(valueQuery) {
+async function getNewImage(valueQuery) {
   const url = `https://api.giphy.com/v1/gifs/translate?api_key=${key}&s=${valueQuery}`;
   try {
+    const response = await fetch(url, { mode: "cors" });
+    const newData = await response.json();
+    img.src = newData.data.images.original.url;
+
+    /* 
     fetch(url, { mode: "cors" }) // Use CORS to avoid errors
       .then((response) => {
         // If theres an error different than 20x (success) show it
@@ -31,11 +36,25 @@ function getNewImage(valueQuery) {
         // Show any error (it usually covers network connections and not status messages)
         console.error(`Something went wrong: ${error}`);
       });
+
+      */
   } catch (error) {
     console.error(`There is an error: ${error.message}`);
   }
 }
 
+/*
+async function getPersonsInfo(name) {
+  try {
+    const people = await server.getPeople();
+    const person = people.find(person => { return person.name === name });
+    return person;
+  } catch (error) {
+    // Handle the error any way you'd like
+  }
+}
+
+*/
 // Show a new image without refreshing
 refreshButton.addEventListener("click", () => {
   getNewImage(defaultQuery);
