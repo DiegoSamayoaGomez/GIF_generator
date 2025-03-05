@@ -14,6 +14,9 @@ async function getNewImage(valueQuery) {
   const url = `https://api.giphy.com/v1/gifs/translate?api_key=${key}&s=${valueQuery}`;
   try {
     const response = await fetch(url, { mode: "cors" });
+    if (!response.ok) {
+      throw new Error(`NOT OK ${response.status}`);
+    }
     const newData = await response.json();
     img.src = newData.data.images.original.url;
 
